@@ -6,3 +6,5 @@ Now we can run the main.py
 
 
 ## All the runnig code is in the src folder
+
+### train accuracy is 75%
