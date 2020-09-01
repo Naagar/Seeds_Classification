@@ -31,7 +31,7 @@ data_transforms = transforms.Compose([
 
 
 class seeds_dataset(Dataset):
-    def __init__(self, txt_path='seeds_dataset/seeds_dataset_labels_file.csv', img_dir='seeds_dataset/images/'):
+    def __init__(self, txt_path='seeds_dataset_labels_file.csv', img_dir='seeds_dataset/images/'):
         """
         Initialize data set as a list of IDs corresponding to each item of data set
 
