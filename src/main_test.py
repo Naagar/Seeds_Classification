@@ -28,7 +28,7 @@ from resnet_from_scratch import ResNet, block
 from torch.utils.tensorboard import SummaryWriter
 
 # Writer will output to ./runs/ directory by default
-writer = SummaryWriter('runs/seed_ResNet152_e_140_img_256/')
+writer = SummaryWriter()
 
 
 def ResNet50(img_channel=3, num_classes=4):
@@ -73,7 +73,7 @@ print('batch_size: ', batch_size)
 print('num_epochs: ', num_epochs)
 print('learning_rate: ', learning_rate)
 print('model: ', "ResNet152")
-print('img_size:' '3 x 256 x 256')
+print('img_size:' '3 x 128 x 128')
 print('device:', device)
 
 
@@ -188,28 +188,30 @@ for epoch in range(num_epochs):
 
 # checking accurscy on training set
 
-def check_accuracy(loader, model):
-    num_correct = 0
-    num_samples = 0
-    model.eval()
+class check_accuracy(loader, model):
+    def __init__(self, loader, model):
+        super(check_accuracy, self).__init__()
+        num_correct = 0
+        num_samples = 0
+        model.eval()
 
 
-    with torch.no_grad():
+        with torch.no_grad():
 
-        for x, y in loader:
+            for x, y in loader:
 
-            x = x.to(device=device)
-            y = y.to(device=device)
+                x = x.to(device=device)
+                y = y.to(device=device)
 
 
-            scores = model(x)
+                scores = model(x)
 
-            _, predictions = scores.max(1)
-            num_correct += (predictions == y ).sum()
-            num_samples += predictions.size(0)
+                _, predictions = scores.max(1)
+                num_correct += (predictions == y ).sum()
+                num_samples += predictions.size(0)
 
-        print(f'Got {num_correct} / {num_samples} with accurscy {float(num_correct)/float(num_samples)*100}')
-    model.train()
+            print(f'Got {num_correct} / {num_samples} with accurscy {float(num_correct)/float(num_samples)*100}')
+        model.train()
 print('Checking accuracy on Traning set')
 
 check_accuracy(train_loader, model)
@@ -219,13 +221,6 @@ print('Checking accuracy on Validation Set')
 
 check_accuracy(validation_loader, model )
 
-print('in_channels: ', in_channels)
-print('batch_size: ', batch_size)
-print('num_epochs: ', num_epochs)
-print('learning_rate: ', learning_rate)
-print('model: ', "ResNet152")
-print('img_size:' '3 x 256 x 256')
-print('device:', device)
 
 # torch.save(arg, path)
 # torch.load(path)

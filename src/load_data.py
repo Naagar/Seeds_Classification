@@ -20,10 +20,9 @@ from torchvision import transforms
 
 
 # Transform
-# transform = transforms.Compose([transforms.ToTensor()])
 data_transforms = transforms.Compose([
-        transforms.Resize(255),
-        transforms.RandomCrop(255),
+        transforms.Resize(128),                     ## 256
+        transforms.RandomCrop(128),                 ## 256
         transforms.RandomHorizontalFlip(),
         transforms.ToTensor(),
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
@@ -31,7 +30,7 @@ data_transforms = transforms.Compose([
 
 
 class seeds_dataset(Dataset):
-    def __init__(self, txt_path='seeds_dataset_labels_file.csv', img_dir='seeds_dataset/images/'):
+    def __init__(self, txt_path='seeds_dataset/seeds_dataset_labels_file.csv', img_dir='seeds_dataset/images/'):
         """
         Initialize data set as a list of IDs corresponding to each item of data set
 
@@ -89,7 +88,7 @@ class seeds_dataset(Dataset):
         Y = self.labels[index]
         # print(Y)
         if self.transform is not None:
-            X = self.transform(X)   ##   H x W x C to    C x H x W
+            X = self.transform(X)   ##   H x W x C to    C x H x W and some other transformations 
 
             
 
