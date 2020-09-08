@@ -10,7 +10,7 @@ from torchvision import transforms, utils
 import torch 
 import torch.nn as nn
 import torchvision.transforms as transforms 
-import torch.optim as optim
+import torch.optim as optim  ##, lr_scheduler
 import torchvision 
 import torch.nn.functional as F
 
@@ -22,14 +22,22 @@ from load_data import seeds_dataset                           # load the data Se
 
 ##    model load
 from model import seeds_model
-from resnet_from_scratch import ResNet, block
-
+# from resnet_from_scratch import ResNet, block
+from resnet_18_34 import ResNet, BasicBlock
+from MobileNet import MobileNetV2
 ## Symmery Writer to visualize the training loss
 from torch.utils.tensorboard import SummaryWriter
 
 # Writer will output to ./runs/ directory by default
-writer = SummaryWriter('runs/seed_ResNet152_e_140_img_256/')
+writer = SummaryWriter('runs/seed_MobileNet_e_140_img_128_val_30/')
 
+# ResNet18 
+def ResNet18():
+    return ResNet(BasicBlock, [2, 2, 2, 2])
+
+# ResNet34
+def ResNet34():
+    return ResNet(BasicBlock, [3, 4, 6, 3])
 
 def ResNet50(img_channel=3, num_classes=4):
 
@@ -64,20 +72,11 @@ learning_rate = 0.0001      ##  default  1e-3
 batch_size = 16             ##  default  256  for best data augmentation
 num_epochs = 140            ##  default  100
 
-validation_split = .2       ##  20% 
+validation_split = .3       ##  20% 
 shuffle_dataset = True 
 random_seed= 42
 
-print('in_channels: ', in_channels)
-print('batch_size: ', batch_size)
-print('num_epochs: ', num_epochs)
-print('learning_rate: ', learning_rate)
-print('model: ', "ResNet152")
-print('img_size:' '3 x 256 x 256')
-print('device:', device)
 
-
-# datalaoder  load data
 
 # Ignore warnings
 import warnings
@@ -111,9 +110,13 @@ validation_loader = DataLoader(transformed_dataset, batch_size=batch_size,
 
 
 # model  = seeds_model()
+model = MobileNetV2(width_mult=1)
+# model = ResNet18()
+
 # model = ResNet50(img_channel=3, num_classes=4)
 # model = ResNet101(img_channel=3,num_classes=4)
-model = ResNet152(img_channel=3, num_classes=4)
+# model = ResNet152(img_channel=3, num_classes=4)
+
 
 # FILE = "model.pth"
 # torch.save(model, FILE)
@@ -133,6 +136,8 @@ model.to(device)
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+
+# step_lr_scheduler = lr_scheduler.StepLR(optimizer,step_size=7, gamma=0.1)
 
 # writer.add_graph(model, images)
 
@@ -166,6 +171,7 @@ for epoch in range(num_epochs):
         optimizer.step()
 
         # Visualization with Tensorboard 
+        # scheduler.Step
         running_loss += loss.item()
         _, predictions = torch.max(scores.data, 1) 
         running_correct += (predictions == targets).sum().item()
@@ -223,8 +229,9 @@ print('in_channels: ', in_channels)
 print('batch_size: ', batch_size)
 print('num_epochs: ', num_epochs)
 print('learning_rate: ', learning_rate)
-print('model: ', "ResNet152")
-print('img_size:' '3 x 256 x 256')
+print('model: ', "MobileNet")
+print('img_size:' '3 x 128 x 128')
+print('Validation Split:', validation_split)
 print('device:', device)
 
 # torch.save(arg, path)

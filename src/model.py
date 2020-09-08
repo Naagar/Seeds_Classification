@@ -32,10 +32,10 @@ class seeds_model(nn.Module):
         # A drop layer deletes 20% of the features to help prevent overfitting
         self.drop = nn.Dropout2d(p=0.2)
         
-        # Our 256x256 image tensors will be pooled twice with a kernel size of 2. 256/2/2 is 64.
+        # Our 128x128 image tensors will be pooled twice with a kernel size of 2. 128/2/2 is 64.
         # So our feature tensors are now 64 x 64, and we've generated 24 of them
         # We need to flatten these to map them to  the probability for each class
-        self.fc = nn.Linear(in_features=63 * 63 * 24, out_features=num_classes)   # fulley connected layer
+        self.fc = nn.Linear(in_features=32 * 32 * 24, out_features=num_classes)   # fulley connected layer
 
     def forward(self, x):
         # Use a relu activation function after layer 1 (convolution 1 and pool)
@@ -52,7 +52,7 @@ class seeds_model(nn.Module):
         # print(x.shape)
         
         # Flatten
-        x = x.view(-1, 63 * 63 * 24)
+        x = x.view(-1, 32 * 32 * 24)
         x = self.fc(x)
         # Return class probabilities via a softmax function 
         return F.log_softmax(x, dim=1)

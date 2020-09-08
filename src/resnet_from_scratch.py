@@ -69,6 +69,7 @@ class ResNet(nn.Module):
         )
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
+        
         # A drop layer deletes 20% of the features to help prevent overfitting
         self.drop = nn.Dropout2d(p=0.25)
 
@@ -127,23 +128,23 @@ class ResNet(nn.Module):
         return nn.Sequential(*layers)
 
 
-def ResNet50(img_channel=3, num_classes=1000):
+def ResNet50(img_channel=3, num_classes=4):
 
     return ResNet(block, [3, 4, 6, 3], img_channel, num_classes)
 
 
-def ResNet101(img_channel=3, num_classes=1000):
+def ResNet101(img_channel=3, num_classes=4):
     return ResNet(block, [3, 4, 23, 3], img_channel, num_classes)
 
 
-def ResNet152(img_channel=3, num_classes=1000):
+def ResNet152(img_channel=3, num_classes=4):
     return ResNet(block, [3, 8, 36, 3], img_channel, num_classes)
 
 
-def test():
-    net = ResNet50(img_channel=3, num_classes=1000)
-    y = net(torch.randn(4, 3, 224, 224))
-    print(y.size())
+# def test():
+#     net = ResNet50(img_channel=3, num_classes=4)
+#     y = net(torch.randn(8, 3, 224, 224))
+#     print(y.size())
 
 
 # test()
