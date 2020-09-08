@@ -5,7 +5,12 @@ Dataset contains 4 classes: Discolored-4, Broken-2, Pure-1, Silkcut-3.
 Now we can run the main.py 
 
 
+## Models
+### -Resnet 18, 34, 50, 101, 152
+### -MobileNetV2
+### -CNN ( & layers)
+
 ## All the runnig code is in the src folder
-### model(MobileNetV2
+### model(MobileNetV2)
 ### train accuracy is 98%
 ### val_accuracy is 73%
