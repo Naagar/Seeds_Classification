@@ -8,7 +8,7 @@ Now we can run the main.py
 ## Models
 ### -Resnet 18, 34, 50, 101, 152
 ### -MobileNetV2
-### -CNN ( & layers)
+### -CNN ( 7 layers)
 
 ## All the runnig code is in the src folder
 ### model(MobileNetV2)
