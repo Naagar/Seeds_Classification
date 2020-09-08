@@ -6,5 +6,6 @@ Now we can run the main.py
 
 
 ## All the runnig code is in the src folder
-
-### train accuracy is 75%
+### model(MobileNetV2
+### train accuracy is 98%
+### val_accuracy is 73%
