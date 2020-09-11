@@ -8,6 +8,7 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also
 
    The dataset contains 4 classes: Discolored-4, Broken-2, Pure-1, Silkcut-3.
    Now we can run the main.py 
+   
    Total images are 17802
 
 
@@ -20,5 +21,5 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also
 
 
 model(MobileNetV2)
-  ...train accuracy is 98%
-  ...val_accuracy is 73%
+   train accuracy is 98%
+   val_accuracy is 73%
