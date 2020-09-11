@@ -13,8 +13,8 @@ Now we can run the main.py
 ## Models
 1. Resnet 18, 34, 50, 101, 152
 2. MobileNetV2
-3. Basic_model ( 4 layers)
-4.Squeezenet
+3. Basic_model( 4 layers)
+4. Squeezenet
 
 
 ## All the runnig code is in the src folder
