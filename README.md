@@ -6,7 +6,7 @@
 which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also the list of images names and their label(train_datafile.csv, test_datafile.csv) 
    Or  create a folder to download the images run Seed_Classification/seeds_dataset/download_images.py which will download images in the images folder.
 
-   The dataset contains 4 classes: Discolored-4, Broken-2, Pure-1, Silkcut-3.
+   The dataset contains 4 classes: Discolored-0, Broken-2, Pure-1, Silkcut-3.
    Now we can run the main.py 
    
    Total images are 17802
