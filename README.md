@@ -43,9 +43,9 @@ model(MobileNetV2)
 
 
 
-   Each RGB image was preprocessed by resizing the smallest dimension to 128, cropping the    center 128x128 region, subtracting the per-pixel mean (across all images) and then using 10 different sub-crops of size 224x224 (corners + center with(out) horizontal flips). 
+   Each RGB image was preprocessed by resizing the smallest dimension to 128, cropping the    center 128x128 region, subtracting the per-pixel mean (across all images) and then using 10 different sub-crops of size 128X128 (corners + center with(out) horizontal flips). 
 
-   Stochastic gradient descent with a mini-batch size of 64 was used to update the parameters, starting with a learning rate of 10−3 , in conjunction with a momentum term of 0.1.
+   Stochastic gradient descent with a batch_size of 256 was used to update the parameters, starting with a learning rate of 10−3 , in conjunction with a momentum term of 0.1.
 
    We anneal the learning rate throughout training manually when the validation error plateaus.
 
