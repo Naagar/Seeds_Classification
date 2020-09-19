@@ -48,7 +48,7 @@ class seeds_model(nn.Module):
         # Drop some features after the 3rd convolution to prevent overfitting
         x = F.relu(self.drop(self.conv3(x)))
         # Only drop the features if this is a training pass
-        x = F.dropout(x, training=self.training)
+        # x = F.dropout(x, training=self.training)
         # print(x.shape)
         
         # Flatten
