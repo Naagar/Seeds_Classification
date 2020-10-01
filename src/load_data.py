@@ -3,7 +3,6 @@ from torchvision.transforms import ToTensor, ToPILImage
 import numpy as np
 import random
 
-
 import io
 import os
 import pandas as pd
@@ -16,20 +15,21 @@ from torchvision import transforms
 
 # Transform
 data_transforms = transforms.Compose([
-        transforms.Resize(128),
+        transforms.Resize(244),
         transforms.RandomRotation(25),                     ## 256
         transforms.RandomCrop(128),                 ## 256
-        transforms.RandomHorizontalFlip(),          ###               Done, vertival flip , random_rotate , brightness and contrast 
+        transforms.RandomHorizontalFlip(p=0.5),          ###               Done, vertival flip , random_rotate , brightness and contrast 
         transforms.RandomVerticalFlip(p=0.5),       ##
         # transforms.RandomRotate(),
-        # transforms.ColorJitter(brightness=0.6,saturation=0.4,contrast=0.4,hue=0.4),   ##   new 
+        transforms.ColorJitter(brightness=0.15,saturation=0.11,contrast=0.15, hue=0.2),   ##   new 
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize([1.0817, 1.1146, 0.9792], [0.8482, 0.9573, 1.1026])  #   mean : [1.0817, 1.1146, 0.9792], std :[0.8482, 0.9573, 1.1026] 
     ])
 
 
 class seeds_dataset(Dataset):
     def __init__(self, txt_path, img_dir):
+
         """
         Initialize data set as a list of IDs corresponding to each item of data set
 
@@ -88,19 +88,17 @@ class seeds_dataset(Dataset):
         # print(Y)
         if self.transform is not None:
             X = self.transform(X)   ##   H x W x C to    C x H x W and some other transformations 
-
-            
-
-        def flatten(t):
-            t = t.reshape(1, -1)
-            t = t.squeeze()
-            return t
-        # X = flatten(X)
-        # print(X.size())
         
         
 
         return X, Y
+
+
+
+
+
+
+### TRASH 
 
 # class seeds_dataset_test(Dataset):
 #     def __init__(self, txt_path='seeds_dataset/data/test_data_file.csv', img_dir='seeds_dataset/data/validation'):

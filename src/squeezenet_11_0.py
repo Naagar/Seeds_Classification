@@ -1,3 +1,4 @@
+squeezenet
 import torch.nn as nn
 import torch
 import torchvision
@@ -28,66 +29,36 @@ class seeds_model(nn.Module):
         
         # A third convolutional layer takes 12 inputs and generates 24 outputs
         self.conv3 = nn.Conv2d(in_channels=12, out_channels=24, kernel_size=3, stride=1, padding=1)
-
-        self.conv4 = nn.Conv2d(in_channels=24, out_channels=48, kernel_size=3, stride=1, padding=1)
         
         # A drop layer deletes 20% of the features to help prevent overfitting
         self.drop = nn.Dropout2d(p=0.2)
         
-        self.conv5 = nn.Conv2d(in_channels=48, out_channels=64, kernel_size=3, stride=1, padding=1)
         # Our 128x128 image tensors will be pooled twice with a kernel size of 2. 128/2/2 is 64.
         # So our feature tensors are now 64 x 64, and we've generated 24 of them
         # We need to flatten these to map them to  the probability for each class
-        self.fc = nn.Linear(in_features=32 * 32 * 64, out_features=num_classes)   # fulley connected layer
+        self.fc = nn.Linear(in_features=32 * 32 * 24, out_features=num_classes)   # fulley connected layer
 
     def forward(self, x):
         # Use a relu activation function after layer 1 (convolution 1 and pool)
         x = F.relu(self.pool(self.conv1(x)))
         # Use a relu activation function after layer 1 (convolution 2 and drop)
-        # print(x.shape)
+        
         # Use a relu activation function after layer 3 (convolution 3)
         x = F.relu(self.pool(self.conv2(x)))
-        # print(x.shape)
+        
         # Drop some features after the 3rd convolution to prevent overfitting
         x = F.relu(self.drop(self.conv3(x)))
-        x = F.relu(self.conv4(x))
         # Only drop the features if this is a training pass
         # x = F.dropout(x, training=self.training)
-
-        x = F.relu(self.conv5(x))
-        # print(x.shape)
-
         # print(x.shape)
         
         # Flatten
-        x = x.view(-1, 32 * 32 * 64)
-        # print(x.shape)
+        x = x.view(-1, 32 * 32 * 24)
         x = self.fc(x)
         # Return class probabilities via a softmax function 
         return F.log_softmax(x, dim=1)
     
 
 
-
-# dtype = torch.float
-# device = torch.device("cpu")
-# # device = torch.device("cuda:0") # Uncomment this to run on GPU
-
-# # N is batch size; D_in is input dimension;
-# # H is hidden dimension; D_out is output dimension.
-# # N, D_in, H, D_out = 64, 1000, 100, 10
-
-# # Create random input and output data
-# x = torch.randn(10, 3, 128, 128,  dtype=dtype)
-# print(x.shape)
-# # y = torch.randn(N, D_out, device=device, dtype=dtype)
-
-# # input = torch.tensor.randn([3, 128, 128])
-# # print(input)
-
-# # data_transforms = transforms.Compose([ transforms.ToTensor() ])
-# # print(x)
 # model = seeds_model()
-# print(model(x))
-# print(model.parameters())
 

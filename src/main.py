@@ -10,6 +10,13 @@
 # readme Done
 # organization of the code                  Done 
 
+## lr_scheduling
+## Visualization 
+
+## Look at the traing curve 
+
+## 
+
 ## seeds classification
 from __future__ import print_function, division
 import os
@@ -43,6 +50,7 @@ from load_data import seeds_dataset                          # load the data Set
 import torchvision.models as models
 
 from model import seeds_model
+# from squeezenet_11 import SqueezeNet
 # from resnet_from_scratch import ResNet, block
 from resnet_18_34 import ResNet, BasicBlock
 from MobileNet import MobileNetV2
@@ -52,21 +60,21 @@ from torch.utils.tensorboard import SummaryWriter
 # Ignore warnings
 
 # Writer will output to ./runs/ directory by default
-writer = SummaryWriter('runs/seed_squeezenet_e_200_img_128_val_30/')
+writer = SummaryWriter('runs/seed_model_e_150_img_128_val_30/')
 
 # hyper parameters 
 in_channels = 3
 num_classes = 4
 
-learning_rate = 0.001      ##  default  1e-3
+learning_rate = 0.001       ##  default  1e-3
 batch_size = 128             ##  default  256  for best data augmentation
-num_epochs = 200            ##  default  100
+num_epochs = 150            ##  default  100
 
-# validation_split = .3       ##  20% 
+# validation_split = .3     ##  20% 
 shuffle_dataset = True 
 random_seed= 42
 # classes names 
-classes = ('Discolored', 'Pure', 'Broken', 'Siklcut') 
+classes = ('Discolored', 'Pure', 'Broken', 'Silkcut') 
 
 global loss
 
@@ -121,8 +129,9 @@ squeezenet = models.squeezenet1_0()
 # model = vgg16
 # model = resnet18
 # model = resnet34
-model = squeezenet
-# model  = seeds_model()
+# model = squeezenet
+# model = SqueezeNet()
+model  = seeds_model()
 # model = MobileNetV2(width_mult=1)
 # model = ResNet18()
 
@@ -131,12 +140,8 @@ model = squeezenet
 # model = ResNet152(img_channel=3, num_classes=4)
 
 
-# FILE = "model.pth"
-# torch.save(model, FILE)
-
 data_iter = iter(train_loader)
 images, labels = data_iter.next()
-
 
 grid = torchvision.utils.make_grid(images)
 writer.add_image('images', grid)
@@ -144,7 +149,13 @@ writer.add_image('images', grid)
 # Loss and optimizer
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)  ## momentum , weight_decay=args.weight_decay
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)  ## momentum , weight_decay=weight_decay
+
+# optimizer = optim.ASGD(model.parameters(), lr=0.01, lambd=0.0001, alpha=0.75, t0=5000.0, weight_decay=0)
+
+scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.91)
+
+### if 
 
 # optimizer_test = optim.SGD([
 #                 {'params': model.base.parameters()},
@@ -165,9 +176,10 @@ running_correct = 0.0
 
 best_accuracy = 0
 
+
 for epoch in range(num_epochs):
     losses = []
-
+    scheduler.step()
     for batch_idx, (data, targets) in enumerate(train_loader):
         data = data.to(device=device)
         targets = targets.to(device=device)
@@ -186,18 +198,21 @@ for epoch in range(num_epochs):
         optimizer.zero_grad()
         loss.backward()
 
+        # Clipping 
+        torch.nn.utils.clip_grad_norm(model.parameters(), max_norm=1)
+
 
         # Gradient Descent or adam step 
         optimizer.step()
 
         # Visualization with Tensorboard 
-        # scheduler.Step
+        # scheduler.step()
         running_loss += loss.item()
         _, predictions = torch.max(scores.data, 1) 
         running_correct += (predictions == targets).sum().item()
 
          # ...log the running loss
-        writer.add_scalar('training loss',
+        writer.add_scalar('training loss 10**-4',
                             running_loss / 1000,
                             epoch * len(train_loader) + batch_idx)
         writer.add_scalar('accuracy',
@@ -242,10 +257,7 @@ def check_accuracy(loader, model):
             num_correct += (predictions == y ).sum()
             num_samples += predictions.size(0)
                 
-            # print(predictions.shape)
-
-            # print(batch_size)
-            # s 
+            
             if ( batch_size == len(predictions) ):
                 # for confusion matrix 
                 # actual_y += y 
@@ -260,12 +272,7 @@ def check_accuracy(loader, model):
                     n_class_samples[label] += 1 
 
         print(f'Got {num_correct} / {num_samples} with accuracy {float(num_correct)/float(num_samples)*100}')
-        # print Confusion matrix 
-        # actual_y = actual_y.to(device)
-        # pred_y = pred_y.to(device)
-        # matrix = confusion_matrix(actual_y,pred_y, labels=[0, 1, 2, 3])
-        # print('Confusion matrix : \n',matrix)
-        # printing the accuracy of each class 
+        
         for i in range(4):
             acc = 100.0 *n_class_correct[i] / n_class_samples[i]
             print(f'Accuracy of {classes[i]}, {acc} %') 
@@ -293,6 +300,7 @@ print('img_size:' '3 x 128 x 128')
 print('device:', device)
 
 # Confusion Matrix  4 X 4 
+print('Confusion Matrix')
 confusion_matrix = torch.zeros(num_classes, num_classes)
 with torch.no_grad():
     for i, (inputs, classes) in enumerate(validation_loader):
