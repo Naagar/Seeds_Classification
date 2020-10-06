@@ -9,9 +9,9 @@
 # record everything,                        Done
 # readme Done
 # organization of the code                  Done 
-
-## lr_scheduling
-## Visualization 
+#02/08
+## lr_scheduling                            Done
+## Visualization                            Done
 
 ## Look at the traing curve 
 
@@ -51,11 +51,16 @@ import torchvision.models as models
 
 from model import seeds_model
 # from squeezenet_11 import SqueezeNet
-# from resnet_from_scratch import ResNet, block
-from resnet_18_34 import ResNet, BasicBlock
+from resnet_from_scratch import ResNet, block
+# from resnet_18_34 import ResNet, BasicBlock
 from MobileNet import MobileNetV2
 ## Symmery Writer to visualize the training loss
 from torch.utils.tensorboard import SummaryWriter
+
+# LR shcedular
+
+from torch.optim.lr_scheduler import ReduceLROnPlateau
+
 
 # Ignore warnings
 
@@ -66,13 +71,13 @@ writer = SummaryWriter('runs/seed_model_e_150_img_128_val_30/')
 in_channels = 3
 num_classes = 4
 
-learning_rate = 0.001       ##  default  1e-3
+learning_rate = 0.01       ##  default  1e-3
 batch_size = 128             ##  default  256  for best data augmentation
-num_epochs = 150            ##  default  100
+num_epochs = 100            ##  default  100
 
 # validation_split = .3     ##  20% 
 shuffle_dataset = True 
-random_seed= 42
+
 # classes names 
 classes = ('Discolored', 'Pure', 'Broken', 'Silkcut') 
 
@@ -149,11 +154,14 @@ writer.add_image('images', grid)
 # Loss and optimizer
 
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=learning_rate)  ## momentum , weight_decay=weight_decay
+# optimizer = optim.Adam(model.parameters(), lr=learning_rate)  ## momentum , weight_decay=weight_decay
+optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True)
 
 # optimizer = optim.ASGD(model.parameters(), lr=0.01, lambd=0.0001, alpha=0.75, t0=5000.0, weight_decay=0)
 
-scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.91)
+# scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
+# scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=20, verbose=False)
+scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.16)
 
 ### if 
 
@@ -179,6 +187,9 @@ best_accuracy = 0
 
 for epoch in range(num_epochs):
     losses = []
+    loss = 0
+    # LR scheduling
+    # print('Epoch:', epoch,'LR:', scheduler.get_lr())
     scheduler.step()
     for batch_idx, (data, targets) in enumerate(train_loader):
         data = data.to(device=device)
@@ -227,8 +238,9 @@ for epoch in range(num_epochs):
         
         running_loss = 0.0
         running_correct = 0.0
+
     # writer.add_scalar('Loss/train', losses, epoch)
-    
+    # scheduler.step(loss)
     print(f'cost at each epoch {epoch} is {sum(losses)/len(losses):.4f}')
 
 # checking accurscy on training set
@@ -299,7 +311,7 @@ print('img_size:' '3 x 128 x 128')
 # print('Validation Split:', validation_split)
 print('device:', device)
 
-# Confusion Matrix  4 X 4 
+# Confusion Matrix  4 X 4 , classes row/coloumn
 print('Confusion Matrix')
 confusion_matrix = torch.zeros(num_classes, num_classes)
 with torch.no_grad():
