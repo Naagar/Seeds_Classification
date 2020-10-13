@@ -13,7 +13,7 @@
 ## lr_scheduling                            Done
 ## Visualization                            Done
 
-## Look at the traing curve 
+## Look at the traing curve                 Done
 
 ## 
 
@@ -65,7 +65,7 @@ from torch.optim.lr_scheduler import ReduceLROnPlateau
 # Ignore warnings
 
 # Writer will output to ./runs/ directory by default
-writer = SummaryWriter('runs/seed_model_e_150_img_128_val_30/')
+writer = SummaryWriter('runs/seed_resnet18_e_120/')
 
 # hyper parameters 
 in_channels = 3
@@ -73,7 +73,7 @@ num_classes = 4
 
 learning_rate = 0.01       ##  default  1e-3
 batch_size = 128             ##  default  256  for best data augmentation
-num_epochs = 100            ##  default  100
+num_epochs = 200            ##  default  100
 
 # validation_split = .3     ##  20% 
 shuffle_dataset = True 
@@ -132,11 +132,12 @@ resnet34 = models.resnet34()
 squeezenet = models.squeezenet1_0()
 
 # model = vgg16
-# model = resnet18
+model = resnet18
 # model = resnet34
 # model = squeezenet
+# model = torch.hub.load('pytorch/vision:v0.6.0', 'squeezenet1_0', pretrained=True) ## Pretrained 
 # model = SqueezeNet()
-model  = seeds_model()
+# model  = seeds_model()
 # model = MobileNetV2(width_mult=1)
 # model = ResNet18()
 
@@ -154,14 +155,14 @@ writer.add_image('images', grid)
 # Loss and optimizer
 
 criterion = nn.CrossEntropyLoss()
-# optimizer = optim.Adam(model.parameters(), lr=learning_rate)  ## momentum , weight_decay=weight_decay
-optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9, nesterov=True)
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)  ## momentum , weight_decay=weight_decay
+# optimizer = torch.optim.SGD(model.parameters(), lr=learning_rate, momentum=0.98, nesterov=True)  # momentum=0.19, 0.89, .92, 0.98
 
 # optimizer = optim.ASGD(model.parameters(), lr=0.01, lambd=0.0001, alpha=0.75, t0=5000.0, weight_decay=0)
 
-# scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=50, gamma=0.1)
+scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=80, gamma=0.10)  # step_size=70, 80, 60
 # scheduler = ReduceLROnPlateau(optimizer, mode='max', factor=0.1, patience=20, verbose=False)
-scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.16)
+# scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.31)
 
 ### if 
 

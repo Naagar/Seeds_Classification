@@ -12,18 +12,29 @@ import torch
 from torchvision import transforms
 
 
-
+lambd = 1
 # Transform
 data_transforms = transforms.Compose([
-        transforms.Resize(244),
+        transforms.Resize(128),                            ## 128
         transforms.RandomRotation(25),                     ## 256
-        transforms.RandomCrop(128),                 ## 256
-        transforms.RandomHorizontalFlip(p=0.5),          ###               Done, vertival flip , random_rotate , brightness and contrast 
-        transforms.RandomVerticalFlip(p=0.5),       ##
+        transforms.RandomCrop(128),                        ## 256
+        # transforms.CenterCrop(128),
+        transforms.RandomHorizontalFlip(p=0.5),            ###               Done, vertival flip , random_rotate , brightness and contrast 
+        transforms.RandomVerticalFlip(p=0.5),              ##
         # transforms.RandomRotate(),
-        transforms.ColorJitter(brightness=0.15,saturation=0.11,contrast=0.15, hue=0.2),   ##   new 
+        # transforms.Lambda(lambd)
+        
+        transforms.ColorJitter(brightness=0.10,saturation=0.090,contrast=0.09, hue=0.09),   ##   new,  brightness=0.19,saturation=0.5,contrast=0.12, hue=0.1, 
+        # (5)brightness=0.15,saturation=0.10,contrast=0.15, hue=0.1
+        # (4)brightness=0.10,saturation=0.90,contrast=0.9, hue=0.9
+        # (3)brightness=0.10,saturation=0.090,contrast=0.09, hue=0.09
+        # (2)brightness=0.30,saturation=0.290,contrast=0.19, hue=0.19
+        # (1)brightness=0.40,saturation=0.190,contrast=0.159, hue=0.39
+        #  transforms.ColorJitter(brightness=0.19,saturation=0.5,contrast=0.02, hue=0.1),   ##   new 
+        # 
         transforms.ToTensor(),
-        transforms.Normalize([1.0817, 1.1146, 0.9792], [0.8482, 0.9573, 1.1026])  #   mean : [1.0817, 1.1146, 0.9792], std :[0.8482, 0.9573, 1.1026] 
+        # transforms.functional.adjust_gamma(img, gamma, gain=1)
+        transforms.Normalize([1.0817, 1.0146, 0.8792], [0.8482, 0.8573, 1.1026])  #   mean : [1.0817, 1.1146, 0.9792], std :[0.8482, 0.9573, 1.1026] 
     ])
 
 
