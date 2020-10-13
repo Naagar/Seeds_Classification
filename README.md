@@ -39,7 +39,7 @@ model(MobileNetV2)
    train accuracy is 98%
    val_accuracy is 73%
    
-model(resnet18)(updated)
+## model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
    train acc is 95%
    test acc is  78%
    
