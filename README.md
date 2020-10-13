@@ -38,6 +38,7 @@ And applied some image augmentation techniques.
 model(MobileNetV2)
    train accuracy is 98%
    val_accuracy is 73%
+   
 model(resnet18)(updated)
    train acc is 95%
    test acc is  78%
