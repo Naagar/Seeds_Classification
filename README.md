@@ -1,5 +1,7 @@
 # Seeds_Classification
 ## All the runnig code is in the src folder
+## to Train your own model run main.py 
+## To use tranfer Learning method run the main_trLr_2.py ( to run this you have to download dataset from [here]()
 
 ## Data_Set
    To download the dataset click on this link [DataSet](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/EVXQD9ClwKtDvguuBsXefIgBexx27v2M8Ajhnwgl8-jixg?e=KklwXv)
