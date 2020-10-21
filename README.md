@@ -2,6 +2,9 @@
 ## All the runnig code is in the 'src' folder
 ## to Train your own model run main.py 
 ## To use Transfer Learning(pre_trained on Imagenet dataset) method run the main_trLr_2.py ( to run this you have to download dataset from [here](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/Efqw-MBVMzVAhajCwpzWmqwBrNMK7zcREdr2ODMmycsd5w?e=ughRM6)
+   Model-:        resnet18(pre_trained on Imagenet)
+   Accuracy-:     train-92, test-81%
+   No.of Epochs-: 250
 
 ## Data_Set
    To download the dataset click on this link [DataSet](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/EVXQD9ClwKtDvguuBsXefIgBexx27v2M8Ajhnwgl8-jixg?e=KklwXv)
@@ -16,7 +19,7 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also
 
 ## Models
    Each image is fed into the input layer, which then talks to the next layer, until eventually the “output” layer is reached. The network’s “answer” comes from this final output layer.
-   Well, we train networks by simply showing them many examples of what we want them to learn, hoping they extract the essence of the matter at hand  and learn to ignore what doesn’t matter (like  shape, size, color or orientation)
+   Well, we train networks by simply showing them many examples of what we want them to learn, hoping they extract the essence of the matter at hand  and learn to ignore what doesn’t matter (like  shape, size, color or orientation).
    Loss and optimizer(Momentum and weight decay)
    Cross Entropy Loss
    Adam 
