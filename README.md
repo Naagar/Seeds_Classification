@@ -24,9 +24,12 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also
    Each image is fed into the input layer, which then talks to the next layer, until eventually the “output” layer is reached. The network’s “answer” comes from this final output layer.
    Well, we train networks by simply showing them many examples of what we want them to learn, hoping they extract the essence of the matter at hand  and learn to ignore what doesn’t matter (like  shape, size, color or orientation).
    Loss and optimizer(Momentum and weight decay)
-   Cross Entropy Loss
-   Adam 
-   SGD
+   
+   Cross Entropy Loss.
+   
+   Adam.
+   
+   SGD.
 
 1. Resnet 18, 34, 50, 101, 152
 2. MobileNetV2
@@ -44,12 +47,16 @@ And applied some image augmentation techniques.
 
 
 model(MobileNetV2)
-   train accuracy is 98%
-   val_accuracy is 73%
+
+   train accuracy is 98%.
+   
+   val_accuracy is 73%.
    
 ## model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
-   train acc is 95%
-   test acc is  78%
+
+   train acc is 95%.
+   
+   test acc is  78%.
    
 ## Training Details
 
