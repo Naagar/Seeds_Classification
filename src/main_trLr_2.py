@@ -15,7 +15,7 @@ import copy
 from torch.utils.tensorboard import SummaryWriter
 
 # Writer will output to ./runs/ directory by default
-writer = SummaryWriter('runs/seed_resnet18/')
+writer = SummaryWriter('runs/seed_googlenet/')
 
 
 
@@ -29,23 +29,29 @@ data_transforms = {
         transforms.RandomVerticalFlip(p=0.5), 
         # transforms.ColorJitter(brightness=0.10,saturation=0.090,contrast=0.09, hue=0.09),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize(mean=[1.0817, 1.1146, 0.9792], std=[0.8482, 0.9573, 1.1026])
     ]),
     'validation': transforms.Compose([
         transforms.Resize(256),
         transforms.CenterCrop(224),
         # transforms.ColorJitter(brightness=0.10,saturation=0.090,contrast=0.09, hue=0.09),
         transforms.ToTensor(),
-        transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        transforms.Normalize(mean=[1.0817, 1.1146, 0.9792], std=[0.8482, 0.9573, 1.1026])  ## mean=[1.0817, 1.1146, 0.9792], std=[0.8482, 0.9573, 1.1026], [0.485, 0.456, 0.406], [0.229, 0.224, 0.225]
     ]),
 }
 
-# loade data 
-data_dir = 'seeds_dataset/data1/'
+
+
+
 
 # Hyperparameters 
 batch_size =128
-num_epochs = 250
+num_epochs = 150
+
+
+## ____ Loading the dataset ____  ####
+
+data_dir = 'seeds_dataset/data1/'
 image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                           data_transforms[x])
                   for x in ['train', 'validation']}
@@ -60,7 +66,7 @@ print(num_epochs)
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-# Traning 
+#  Defining the Traning Function  
 def train_model(model, criterion, optimizer, scheduler, num_epochs):
     since = time.time()
 
@@ -76,7 +82,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs):
             if phase == 'train':
                 model.train()  # Set model to training mode
             else:
-                model.eval()   # Set model to evaluate mode
+                model.eval()   # Set model to evaluate mode (Validation)
 
             running_loss = 0.0
             running_corrects = 0
@@ -86,7 +92,7 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs):
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
-                # zero the parameter gradients
+                # set zero the parameter gradients
                 optimizer.zero_grad()
 
                 # forward
@@ -111,10 +117,15 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs):
             epoch_acc = running_corrects.double() / dataset_sizes[phase]
             print('{} Loss: {:.4f} Acc: {:.4f}'.format(
                 phase, epoch_loss, epoch_acc))
+            ## write loss and acc to tensorboard 
             if phase == 'train':
-            	writer.add_scalar('Tranning Loss 10**-4', running_loss / 10000, epoch * len(dataloaders) + batch_idx)
-            	writer.add_scalar('Accuracy ', epoch_acc, epoch * len(dataloaders) + batch_idx)
+            	writer.add_scalar('Tranning Loss 10**-3', (running_loss / 1000), epoch * len(dataloaders) + batch_idx)
+            	writer.add_scalar('Tranning Accuracy ', epoch_acc, epoch * len(dataloaders) + batch_idx)
             	# print('')
+
+            if phase == 'validation':
+                writer.add_scalar('Validation Loss:', (running_loss/1000), epoch * len(dataloaders) + batch_idx)
+                writer.add_scalar('Validation Acc :', epoch_acc, epoch * len(dataloaders) + batch_idx)
             # deep copy the model
             if phase == 'validation' and epoch_acc > best_acc:
                 best_acc = epoch_acc
@@ -130,11 +141,12 @@ def train_model(model, criterion, optimizer, scheduler, num_epochs):
     # load best model weights
     model.load_state_dict(best_model_wts)
     return model
+## __ choose the model __ ##
 
-model_ft = models.resnet18(pretrained=True)
+# model_ft = models.resnet18(pretrained=True)
+model_ft = models.googlenet(pretrained=True)
 num_ftrs = model_ft.fc.in_features
 # Here the size of each output sample is set to 4.
-# Alternatively, it can be generalized to nn.Linear(num_ftrs, len(class_names)).
 model_ft.fc = nn.Linear(num_ftrs, 4)
 
 model_ft = model_ft.to(device)
@@ -151,10 +163,11 @@ criterion = nn.CrossEntropyLoss()
 # Observe that all parameters are being optimized
 optimizer_ft = optim.SGD(model_ft.parameters(), lr=0.001, momentum=0.99)
 
-# Decay LR by a factor of 0.1 every 7 epochs
-exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=200, gamma=0.1)
+# Decay LR by a factor of 0.1 every **** epochs
+exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=100, gamma=0.1)
 
 
+## _______ Trainning model  __________ ####
 
 model_ft = train_model(model_ft, criterion, optimizer_ft, exp_lr_scheduler,
                        num_epochs)
@@ -176,7 +189,7 @@ with torch.no_grad():
 print(confusion_matrix)
 
 
-#########
+#########_____________           TRASH             _________##############
 
 
 
