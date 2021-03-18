@@ -5,19 +5,23 @@
 
    Model-:        resnet18(pre_trained on Imagenet).
    
-   Accuracy-:     train-92% , test-81%.
+   Accuracy-:     94% 
    
-   No.of Epochs-: 250.
+   No.of Epochs-: 100.
 
 ## Data_Set
    To download the dataset click on this link [DataSet](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/EVXQD9ClwKtDvguuBsXefIgBexx27v2M8Ajhnwgl8-jixg?e=KklwXv)
 which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also the list of images names and their label(train_datafile.csv, test_datafile.csv) 
    Or  create a folder to download the images run Seed_Classification/seeds_dataset/download_images.py which will download images in the images folder.
 
-   The dataset contains 4 classes: Discolored-0, Broken-2, Pure-1, Silkcut-3.
+   The dataset contains 4 classes: Discolored-0, Broken-2, Pure-1, Silkcut-3.(B, D, P, S)
    Now we can run the main.py 
    
-   Total images are 17802
+    real images are 17802
+    fake images are 40000(10k each class)
+    Dataset 57802
+   
+   
 
 
 ## Models
@@ -48,15 +52,15 @@ And applied some image augmentation techniques.
 
 model(MobileNetV2)
 
-   train accuracy is 98%.
    
-   val_accuracy is 73%.
+   
+   val_accuracy is 93%.
    
 ## model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
 
-   train acc is 95%.
    
-   test acc is  78%.
+   
+   test acc is  94.03%.
    
 ## Training Details
 
