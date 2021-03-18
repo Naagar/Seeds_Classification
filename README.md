@@ -71,7 +71,10 @@ model(MobileNetV2)
    Stochastic gradient descent with a batch_size of 256 was used to update the parameters, starting with a learning rate of 10−3 , in conjunction with a momentum term of 0.1.
 
    We anneal the learning rate throughout training manually when the validation error plateaus.
-
+## classifying the sack of images after doing segmentation to get the single seed image.
+   TODO
+   
+   
 ## Future  Work
 
    We can do more experiments by changing the  Learning rate.
