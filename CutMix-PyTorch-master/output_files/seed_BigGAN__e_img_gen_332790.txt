@@ -1,0 +1,11 @@
+==========================================
+SLURM_JOB_ID = 332790
+SLURM_NODELIST = gnode56
+SLURM_JOB_GPUS = 0,1
+==========================================
+Traceback (most recent call last):
+  File "train.py", line 418, in <module>
+    main()
+  File "train.py", line 94, in main
+    datasets.ImageFolder('data/train', transforms=transform_train),
+TypeError: __init__() got an unexpected keyword argument 'transforms'

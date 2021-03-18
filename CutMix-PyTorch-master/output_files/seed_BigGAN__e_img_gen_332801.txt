@@ -1,0 +1,17 @@
+==========================================
+SLURM_JOB_ID = 332801
+SLURM_NODELIST = gnode56
+SLURM_JOB_GPUS = 0,1
+==========================================
+=> creating model 'resnet'
+the number of model parameters: 0
+Traceback (most recent call last):
+  File "train.py", line 418, in <module>
+    main()
+  File "train.py", line 184, in main
+    weight_decay=args.weight_decay, nesterov=True)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/optim/sgd.py", line 68, in __init__
+    super(SGD, self).__init__(params, defaults)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/optim/optimizer.py", line 47, in __init__
+    raise ValueError("optimizer got an empty parameter list")
+ValueError: optimizer got an empty parameter list

@@ -1,0 +1,43 @@
+==========================================
+SLURM_JOB_ID = 332808
+SLURM_NODELIST = gnode36
+SLURM_JOB_GPUS = 1,2
+==========================================
+=> creating model 'resnet'
+True
+the number of model parameters: 2073556
+Traceback (most recent call last):
+  File "train.py", line 418, in <module>
+    main()
+  File "train.py", line 193, in main
+    train_loss = train(train_loader, model, criterion, optimizer, epoch)
+  File "train.py", line 229, in train
+    for i, (input, target) in enumerate(train_loader):
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 435, in __next__
+    data = self._next_data()
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 1085, in _next_data
+    return self._process_data(data)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/utils/data/dataloader.py", line 1111, in _process_data
+    data.reraise()
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/_utils.py", line 428, in reraise
+    raise self.exc_type(msg)
+ValueError: Caught ValueError in DataLoader worker process 0.
+Original Traceback (most recent call last):
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/utils/data/_utils/worker.py", line 198, in _worker_loop
+    data = fetcher.fetch(index)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py", line 44, in fetch
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/utils/data/_utils/fetch.py", line 44, in <listcomp>
+    data = [self.dataset[idx] for idx in possibly_batched_index]
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torchvision/datasets/folder.py", line 153, in __getitem__
+    sample = self.transform(sample)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torchvision/transforms/transforms.py", line 67, in __call__
+    img = t(img)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torch/nn/modules/module.py", line 727, in _call_impl
+    result = self.forward(*input, **kwargs)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torchvision/transforms/transforms.py", line 585, in forward
+    i, j, h, w = self.get_params(img, self.size)
+  File "/home/sandeep.nagar/anaconda3/lib/python3.7/site-packages/torchvision/transforms/transforms.py", line 542, in get_params
+    "Required crop size {} is larger then input image size {}".format((th, tw), (h, w))
+ValueError: Required crop size (256, 256) is larger then input image size (144, 132)
+

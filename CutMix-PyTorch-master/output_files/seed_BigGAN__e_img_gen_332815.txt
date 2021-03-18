@@ -1,0 +1,18 @@
+==========================================
+SLURM_JOB_ID = 332815
+SLURM_NODELIST = gnode36
+SLURM_JOB_GPUS = 1,2
+==========================================
+=> creating model 'resnet'
+True
+the number of model parameters: 2073556
+Traceback (most recent call last):
+  File "train.py", line 426, in <module>
+    main()
+  File "train.py", line 201, in main
+    train_loss = train(train_loader, model, criterion, optimizer, epoch)
+  File "train.py", line 264, in train
+    err1, err5 = accuracy(output.data, target, topk=(1, 5))
+  File "train.py", line 412, in accuracy
+    _, pred = output.topk(maxk, 1, True, True)
+RuntimeError: invalid argument 5: k not in range for dimension at /pytorch/aten/src/THC/generic/THCTensorTopK.cu:26
