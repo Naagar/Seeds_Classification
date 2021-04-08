@@ -5,7 +5,7 @@
 
    Model-:        resnet18(pre_trained on Imagenet).
    
-   Accuracy-:     94% 
+   Accuracy-:     86% 
    
    No.of Epochs-: 100.
 
@@ -18,7 +18,7 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also
    Now we can run the main.py 
    
     real images are 17802
-    fake images are 40000(10k each class)
+    fake images are 20000(50k each class)
     Dataset 57802
    
    
@@ -54,13 +54,13 @@ model(MobileNetV2)
 
    
    
-   val_accuracy is 93%.
+   val_accuracy is 86%.
    
 ## model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
 
    
    
-   test acc is  94.03%.
+  val acc is  86.03%.
    
 ## Training Details
 
