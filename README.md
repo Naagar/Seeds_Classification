@@ -18,7 +18,7 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2 respectively  also
    Now we can run the main.py 
    
     real images are 17802
-    fake images are 20000(50k each class)
+    fake images are 20000(5K each class)
     Dataset 57802
    
    
