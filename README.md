@@ -1,6 +1,12 @@
 # Corn Seeds Classification
 
 ## Paper:  Automated Seed Quality Testing System using GAN & Active Learning
+
+Accepted: 9th International Conference on Pattern Recognition and Machine Intelligence
+
+[PReMI'21](https://www.isical.ac.in/~miu/PREMI_DETAILS/premi21CFP_.pdf)
+
+
 All the running code is in the src/ folder
 To train your model, run main.py 
 To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the main_trLr_2.py ( to run this, you have to download the dataset from [here](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/Efqw-MBVMzVAhajCwpzWmqwBrNMK7zcREdr2ODMmycsd5w?e=ughRM6).
