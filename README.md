@@ -11,7 +11,8 @@ To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the ma
    
    No.of Epochs-: 100.
 
-## Dataset
+## Dataset [webpage](https://naagar.github.io/cornseedsdataset/)
+   
    To download the dataset, click on this link [Dataset](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/EVXQD9ClwKtDvguuBsXefIgBexx27v2M8Ajhnwgl8-jixg?e=KklwXv)
 which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively  also the list of images names and their label(train_datafile.csv, test_datafile.csv) 
    Or create a folder to download the images run Seed_Classification/seeds_dataset/download_images.py, which will download images in the images folder.
