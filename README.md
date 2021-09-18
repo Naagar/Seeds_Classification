@@ -27,6 +27,18 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively  als
  
 
 ## Models
+
+### 1. Cond. GAN (BigGAN) 
+
+      For the fake image generation to solve the dataset imbalance problem.
+### 2. Batch Active Learning (BatchBALD)
+
+      For labelling the new captured images of corn seeds.
+      
+### 3. Classification
+
+      For classification of corn seed
+      
    Each image is fed into the input layer, which then talks to the next layer until the “output” layer is reached. The network’s “answer” comes from this final output layer.
    Well, we train networks by simply showing them many examples of what we want them to learn, hoping they extract the essence of the matter at hand and learn to ignore what doesn’t matter (like shape, size, colour or orientation).
    Loss and optimizer(Momentum and weight decay)
