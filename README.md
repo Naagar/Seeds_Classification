@@ -43,7 +43,7 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively  als
       
 ### 3. Classification
 
-      For classification of corn seed
+      python main_trLr_2.py
       
    Each image is fed into the input layer, which then talks to the next layer until the “output” layer is reached. The network’s “answer” comes from this final output layer.
    Well, we train networks by simply showing them many examples of what we want them to learn, hoping they extract the essence of the matter at hand and learn to ignore what doesn’t matter (like shape, size, colour or orientation).
