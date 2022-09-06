@@ -70,7 +70,7 @@ And applied some image augmentation techniques.
 
 Classification model (MobileNetV2)
 
-   val_accuracy is 86%.
+   Validation accuracy: 86%
    
 Classification model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
    
