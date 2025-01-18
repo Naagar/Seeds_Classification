@@ -9,7 +9,7 @@ Accepted: 9th International Conference on Pattern Recognition and Machine Intell
 
 All the running code is in the src/ folder
 To train your model, run 'main.py' 
-To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the 'main_trLr_2.py' ( to run this, you have to download the dataset from [here](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/Efqw-MBVMzVAhajCwpzWmqwBrNMK7zcREdr2ODMmycsd5w?e=ughRM6)).
+To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the 'main_trLr_2.py' ( to run this, you have to download the dataset from [here](https://datafoundation.iiit.ac.in/datasets/agriculture).
 
    Model-:        resnet18(pre_trained on Imagenet).
    
@@ -19,11 +19,11 @@ To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the 'm
 
 ## Dataset [webpage](https://naagar.github.io/cornseedsdataset/)
    
-   To download the dataset, click on this link [Dataset](https://iiitaphyd-my.sharepoint.com/:u:/g/personal/sandeep_nagar_research_iiit_ac_in/EVXQD9ClwKtDvguuBsXefIgBexx27v2M8Ajhnwgl8-jixg?e=KklwXv)
-which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively  also the list of images names and their label(train_datafile.csv, test_datafile.csv) 
-   Or create a folder to download the images run Seed_Classification/seeds_dataset/download_images.py, which will download images in the images folder.
+   To download the dataset, click on this link [Dataset](https://datafoundation.iiit.ac.in/datasets/agriculture)
+which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively,  as the list of image names and their label(train_datafile.csv, test_datafile.csv) 
+   Or create a folder to download the images, run Seed_Classification/seeds_dataset/download_images.py, which will download images in the images folder.
 
-   The dataset contains four classes: Discolored-0, Broken-2, Pure-1, Silkcut-3 (B, D, P, S).
+   The dataset contains four classes: Discolored-0, Broken-2, Pure-1, and Silkcut-3 (B, D, P, S).
    Now we can run the main.py 
    
     real images: 17802
@@ -39,7 +39,7 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively  als
       For the fake image generation to solve the dataset imbalance problem.
 ### 2. Batch Active Learning (BatchBALD)
 
-      For labelling the new captured images of corn seeds.
+      This is for labeling the newly captured images of corn seeds.
       
 ### 3. Classification
 
@@ -64,9 +64,9 @@ which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively  als
    
    Choosing the classification model is difficult as we have a very small dataset and the distribution of the images of each class in the data set.
 And applied some image augmentation techniques.
-   We have used the Resnet(18, 34, 50, 101, 152), SqueezeNet, MobileNetV2 and simple model (3 CNN and 1 FC layers).
+   We have used the Resnet(18, 34, 50, 101, 152), SqueezeNet, MobileNetV2, and simple model (3 CNN and 1 FC layers).
    
-   Here the main problem is the overfitting, and to overcome this, we have used the Drop out method. 
+   Here, the main problem is overfitting, and to overcome this, we have used the Dropout method. 
 
 Classification model (MobileNetV2)
 
@@ -82,9 +82,9 @@ Classification model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
    3. Training image classifier model.
 
 
-   Each RGB image was preprocessed by resizing the smallest dimension to 128, cropping the centre 128x128 region, subtracting the per-pixel mean (across all images) and then using ten different sub-crops of size 128X128 (corners + centre with(out) horizontal flips). 
+   Each RGB image was preprocessed by resizing the smallest dimension to 128, cropping the center 128x128 region, subtracting the per-pixel mean (across all images), and then using ten different sub-crops of size 128X128 (corners + center with(out) horizontal flips). 
 
-   Stochastic gradient descent with batch_size of 256 was used to update the parameters, starting with learning rate of 10−3, in conjunction with a momentum term of 0.1.
+   Stochastic gradient descent with batch_size of 256 was used to update the parameters, starting with a learning rate of 10−3, in conjunction with a momentum term of 0.1.
 
    We anneal the learning rate throughout training manually when the validation error plateaus.
 ## Classifying the sack of images after doing segmentation to get the single seed image.
