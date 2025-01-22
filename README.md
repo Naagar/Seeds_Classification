@@ -9,7 +9,7 @@ Accepted: 9th International Conference on Pattern Recognition and Machine Intell
 
 All the running code is in the src/ folder
 To train your model, run 'main.py' 
-To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the 'main_trLr_2.py' ( to run this, you have to download the dataset from [here](https://datafoundation.iiit.ac.in/datasets/agriculture).
+To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the 'main_trLr_2.py' ( to run this, you have to download the dataset from [here](https://india-data.org/dataset-details/53a0923f-02f2-4fa5-a933-de04907e0ed6).
 
    Model-:        resnet18(pre_trained on Imagenet).
    
@@ -19,7 +19,7 @@ To use the Transfer Learning(pre_trained on Imagenet dataset) method, run the 'm
 
 ## Dataset [webpage](https://naagar.github.io/cornseedsdataset/)
    
-   To download the dataset, click on this link [Dataset](https://datafoundation.iiit.ac.in/datasets/agriculture)
+   To download the dataset, click on this link [Dataset](https://india-data.org/dataset-details/53a0923f-02f2-4fa5-a933-de04907e0ed6)
 which contains a zip file (data/train, data/test) 0.8 and 0.2, respectively,  as the list of image names and their label(train_datafile.csv, test_datafile.csv) 
    Or create a folder to download the images, run Seed_Classification/seeds_dataset/download_images.py, which will download images in the images folder.
 
@@ -86,7 +86,7 @@ Classification model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
 
    Stochastic gradient descent with batch_size of 256 was used to update the parameters, starting with a learning rate of 10−3, in conjunction with a momentum term of 0.1.
 
-   We anneal the learning rate throughout training manually when the validation error plateaus.
+   We manually anneal the learning rate throughout training when the validation error plateaus.
 ## Classifying the sack of images after doing segmentation to get the single seed image.
    TODO
    
@@ -97,7 +97,7 @@ Classification model(resnet18)(updated)(e_200, optim-Adam,lr-0.001)
    
    We are exploring more image augmentation techniques.
    
-   I am visualizing the images after using image augmentation to know a more accurate effect of the same. 
+   I am visualizing the images after using image augmentation to determine a more accurate effect. 
    
    They are decreasing the difference between the train and test accuracy.
    
